@@ -35,7 +35,7 @@ func (c *ClerkClient) CreateMember(ctx context.Context, group string, cfg *Membe
 
 	memberWithID, err := c.grpcClient.AddMember(ctx, &proto.MemberRequest{Group: group})
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("client creation error: %w", err)
 	}
 
 	return newMember(c.grpcClient, memberWithID, getDefaultMemberConfigIfEmpty(cfg)), nil

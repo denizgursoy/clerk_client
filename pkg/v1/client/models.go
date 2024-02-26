@@ -59,6 +59,7 @@ func (m *Member) Start(c context.Context) <-chan Partition {
 	return m.notifyChannel
 }
 
+// statPinging ping the server until context is cancelled
 func (m *Member) statPinging(ctx context.Context) {
 	for {
 		select {
@@ -93,7 +94,6 @@ func (m *Member) changePartition(partition *proto.Partition) {
 func (m *Member) terminate() error {
 	m.cancelFunc()
 	close(m.notifyChannel)
-	m.notifyChannel = nil
 	m.pingTicker.Stop()
 
 	return nil
